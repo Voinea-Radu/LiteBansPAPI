@@ -1,0 +1,7 @@
+name: LiteBansPapi
+version: ${project.version}
+main: dev.lightdream.litebanspapi.LiteBansPapi
+api-version: 1.16
+depend: [ LiteBans, PlaceholderAPI ]
+authors: [ L1ghtDream ]
+website: https://lightdream.tk
