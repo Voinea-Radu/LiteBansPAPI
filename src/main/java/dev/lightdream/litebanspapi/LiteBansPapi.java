@@ -27,37 +27,51 @@ public final class LiteBansPapi extends JavaPlugin {
         }
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
-            try {
-                String query = "SELECT COUNT(*) FROM {bans}";
-                PreparedStatement st = Database.get().prepareStatement(query);
-                ResultSet rs = st.executeQuery();
-                if (rs.next()) {
-                    bans = (int) rs.getLong(1);
-                }
-
-                query = "SELECT COUNT(*) FROM {warnings}";
-                st = Database.get().prepareStatement(query);
-                rs = st.executeQuery();
-                if (rs.next()) {
-                    warns = (int) rs.getLong(1);
-                }
-
-                query = "SELECT COUNT(*) FROM {kicks}";
-                st = Database.get().prepareStatement(query);
-                rs = st.executeQuery();
-                if (rs.next()) {
-                    kicks = (int) rs.getLong(1);
-                }
-
-                query = "SELECT COUNT(*) FROM {mutes}";
-                st = Database.get().prepareStatement(query);
-                rs = st.executeQuery();
-                if (rs.next()) {
-                    mutes = (int) rs.getLong(1);
+            String query = "SELECT COUNT(*) FROM {bans}";
+            try (PreparedStatement st = Database.get().prepareStatement(query)) {
+                try (ResultSet rs = st.executeQuery()) {
+                    if (rs.next()) {
+                        bans = (int) rs.getLong(1);
+                    }
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
+            query = "SELECT COUNT(*) FROM {warnings}";
+            try (PreparedStatement st = Database.get().prepareStatement(query)) {
+                try (ResultSet rs = st.executeQuery()) {
+                    if (rs.next()) {
+                        warns = (int) rs.getLong(1);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            query = "SELECT COUNT(*) FROM {kicks}";
+            try (PreparedStatement st = Database.get().prepareStatement(query)) {
+                try (ResultSet rs = st.executeQuery()) {
+                    if (rs.next()) {
+                        kicks = (int) rs.getLong(1);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+            query = "SELECT COUNT(*) FROM {mutes}";
+            try (PreparedStatement st = Database.get().prepareStatement(query)) {
+                try (ResultSet rs = st.executeQuery()) {
+                    if (rs.next()) {
+                        mutes = (int) rs.getLong(1);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         }, 0, 20 * 10);
     }
 }
