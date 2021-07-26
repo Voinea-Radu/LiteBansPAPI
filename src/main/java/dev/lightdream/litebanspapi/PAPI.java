@@ -33,7 +33,7 @@ public class PAPI extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getIdentifier() {
-        return LiteBansPapi.PROJECT_NAME.toLowerCase();
+        return "litebanspapi";
     }
 
     @Override
@@ -43,24 +43,19 @@ public class PAPI extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String identifier) {
-        if (player == null) {
-            return null;
-        }
 
-        List<String> allowedMethods = Arrays.asList("bans", "mutes", "warnings", "kicks");
-        if(allowedMethods.contains(identifier)){
-            String query = "SELECT COUNT(*) FROM {"+ identifier + "}";
-            try (PreparedStatement st = Database.get().prepareStatement(query)) {
-                try (ResultSet rs = st.executeQuery()) {
-                    if (rs.next()) {
-                        return String.valueOf(rs.getLong(1));
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        switch (identifier){
+            case "bans":
+                return String.valueOf(plugin.bans);
+            case "warns":
+                return String.valueOf(plugin.warns);
+            case "kicks":
+                return String.valueOf(plugin.kicks);
+            case "mutes":
+                return String.valueOf(plugin.mutes);
         }
 
         return null;
     }
+
 }
